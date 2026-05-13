@@ -533,6 +533,11 @@ footer {
   padding: 5rem 2rem 6rem;
 }
 
+.about-intro-banner {
+  margin: 0 -2rem 3.5rem;
+  border-radius: 4px;
+}
+
 .about-intro {
   display: flex;
   gap: 3.5rem;
