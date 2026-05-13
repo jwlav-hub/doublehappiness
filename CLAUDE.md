@@ -40,29 +40,41 @@ Double Happiness is being transformed from a personal travel photo blog into a *
 ```
 doublehappiness/
 ├── css/
-│   └── styles.css              ← Single stylesheet, do not split
-├── images/                     ← All images (downloaded from Bluehost, local)
-├── netlify/
-│   └── functions/
-│       └── claude-proxy.js     ← Server-side Anthropic API proxy
-├── posts/                      ← Journal posts (Cambodia content)
+│   └── styles.css          ← Single stylesheet, do not split
+├── images/                 ← All images live here
+├── posts/                  ← Individual post HTML files
 │   ├── banteay-kdei.html
-│   ├── buddhist-temple-angkor-park.html
+│   ├── walking-in-phnom-penh.html
+│   ├── koh-rong.html
 │   ├── chinese-house-phnom-penh.html
 │   ├── gates-of-angkor-thom.html
-│   ├── khmer-smile-bayon-temple.html
-│   ├── koh-rong.html
-│   └── walking-in-phnom-penh.html
-├── guides/                     ← New practical guide posts go here (empty)
+│   └── khmer-smile-bayon-temple.html
 ├── .gitignore
 ├── about.html
-├── guides.html                 ← Practical guides listing page
-├── index.html                  ← Homepage (updated with Tools section)
-├── journal.html                ← Journal listing page (renamed from blog.html)
-├── michelin.html               ← Budget Michelin Finder AI tool
-├── netlify.toml                ← Netlify config (blog→journal redirect + API proxy)
-├── plan.html                   ← Itinerary Engine AI tool
-└── CLAUDE.md                   ← This file
+├── blog.html               ← RENAME to journal.html (see Step 1 below)
+├── index.html              ← Homepage
+├── netlify.toml            ← Netlify config
+└── CLAUDE.md               ← This file
+```
+
+### Target File Structure (after transformation)
+
+```
+doublehappiness/
+├── css/
+│   └── styles.css
+├── images/
+├── posts/                  ← Journal posts (existing Cambodia content)
+├── guides/                 ← New practical guide posts go here
+├── .gitignore
+├── about.html
+├── journal.html            ← Renamed from blog.html
+├── guides.html             ← NEW: Practical guides listing page
+├── michelin.html           ← NEW: Budget Michelin Finder tool
+├── plan.html               ← NEW: Itinerary Engine tool
+├── index.html              ← Updated homepage
+├── netlify.toml            ← Updated with redirect
+└── CLAUDE.md
 ```
 
 ---
@@ -89,46 +101,8 @@ Both loaded from Google Fonts. Do not add new font families.
 </a>
 ```
 
-### Color Palette
-
-This is the definitive color system for the site. Apply it via CSS custom properties in `:root` at the top of `css/styles.css`. Do not hardcode hex values anywhere else — always reference the variable.
-
-```css
-:root {
-  --color-dark-void:   #141616;  /* Primary background, darkest surfaces */
-  --color-iridium:     #3D3C38;  /* Card backgrounds, secondary surfaces */
-  --color-artillery:   #746D67;  /* Borders, muted text, dividers */
-  --color-equilibrium: #A49F9D;  /* Subheadings, captions, placeholder text */
-  --color-falu-red:    #7F1D1A;  /* PRIMARY ACCENT — 囍 logo mark, links, buttons, hover states */
-  --color-white:       #F5F3F0;  /* Body text on dark backgrounds (warm white, not pure) */
-}
-```
-
-#### How to Use Each Color
-
-| Variable | Hex | Use |
-|---|---|---|
-| `--color-dark-void` | `#141616` | Page background, nav background, hero |
-| `--color-iridium` | `#3D3C38` | Post card backgrounds, tool panels, footer |
-| `--color-artillery` | `#746D67` | Borders, `<hr>` dividers, secondary nav text |
-| `--color-equilibrium` | `#A49F9D` | Post meta dates, captions, section labels |
-| `--color-falu-red` | `#7F1D1A` | **囍 logo-char, active nav links, buttons, `.read-more`, hover states, accent bars** |
-| `--color-white` | `#F5F3F0` | Body copy, headings on dark backgrounds |
-
-#### Critical: The 囍 Mark
-The logo character must always render in Falu Red. This is both a brand and a cultural decision — red is the correct color for 囍 in Chinese tradition.
-
-```css
-.logo-char {
-  color: var(--color-falu-red);
-}
-```
-
-#### Color Rules
-- Never use pure black (`#000000`) or pure white (`#ffffff`) — use Dark Void and the warm white instead
-- Falu Red is an accent only — do not use it for large background areas or body text
-- Maintain sufficient contrast: warm white text on Dark Void or Iridium backgrounds always passes WCAG AA
-- Do not add new colors without updating this file first
+### Colors
+Exact values are in `css/styles.css`. When in doubt, inspect that file first. Do not hardcode colors inline — use the existing CSS classes.
 
 ### Component Patterns
 - **Post cards:** `<article class="post-card">` with `.post-card-img` and `.post-card-body`
@@ -192,22 +166,33 @@ Work through these steps in order. Do not skip ahead.
 ### ✅ Step 0 — Audit Complete
 Repo structure and existing files have been reviewed. Stack confirmed as raw HTML/CSS/JS.
 
-### ✅ Step 1 — Update Navigation + Apply Color System
-- Dark editorial color system applied to `css/styles.css` (Falu Red accents, Dark Void base, Iridium surfaces)
-- `blog.html` renamed to `journal.html`; 6-link nav added to all pages
-- Footer nav expanded across all files; `netlify.toml` redirect added
+### 🔲 Step 1 — Update Navigation (DO THIS FIRST)
+1. Rename `blog.html` → `journal.html`
+2. Update nav in `index.html` (both hero nav and sticky nav), `journal.html`, and `about.html`
+3. Update footer nav in all files
+4. Add redirect in `netlify.toml`:
+```toml
+[[redirects]]
+  from = "/blog.html"
+  to = "/journal.html"
+  status = 301
+```
+5. Update all internal `href="blog.html"` links (including post cards on homepage) to `journal.html`
 
-### ✅ Step 2 — Build `michelin.html` (Budget Michelin Finder)
-City/budget/meal-type form, calls `/api/claude` proxy, renders Michelin badge result cards, affiliate hooks.
+### 🔲 Step 2 — Build `michelin.html` (Budget Michelin Finder)
+Full spec below. This is the highest-impact quick win — build it early.
 
-### ✅ Step 3 — Build `guides.html` (Practical Guides Landing Page)
-Coming-soon landing page with 4 placeholder guide cards.
+### 🔲 Step 3 — Build `guides.html` (Practical Guides Landing Page)
+Listing page for practical travel content. Same layout as `journal.html` but with "Guides" branding. Starts empty with a "coming soon" message or placeholder cards.
 
-### ✅ Step 4 — Build `plan.html` (Itinerary Engine)
-7-parameter form, 5 persona radio cards, Day 1 teaser + email gate, affiliate hooks.
+### 🔲 Step 4 — Build `plan.html` (Itinerary Engine)
+Full spec below. More complex than Michelin — build after michelin.html is working.
 
-### ✅ Step 5 — Update Homepage (`index.html`)
-Tools section added with Budget Michelin and Plan My Trip feature cards. Hero updated to "Asia Travel & Dining Platform". Copyright updated to 2025.
+### 🔲 Step 5 — Update Homepage (`index.html`)
+- Add a "Tools" section between the intro and blog posts sections
+- Feature cards for Budget Michelin Finder and Plan My Trip
+- Add a "Guides" section or at minimum a link to guides.html
+- Update tagline/hero text to reflect expanded mission
 
 ### 🔲 Step 6 — Set Up Google Search Console + Analytics
 Add GSC verification meta tag and Google Analytics 4 script to all pages.
