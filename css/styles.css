@@ -16,10 +16,10 @@ body {
 :root {
   --gold: #8b7d65;
   --gold-light: #b0976e;
-  --dark: #1a1a1a;
+  --dark: #3D3C38;
   --text: #2c2c2c;
   --text-light: #6b6560;
-  --bg-light: #f8f6f2;
+  --bg-light: #ECE8C6;
   --border: #e8e4dd;
   --white: #fff;
 }
