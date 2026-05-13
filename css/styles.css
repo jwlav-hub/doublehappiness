@@ -45,8 +45,9 @@ h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 600; line-
 .logo-img {
   width: 48px;
   height: 48px;
+  max-width: 48px;
   object-fit: contain;
-  display: block;
+  display: block !important;
   flex-shrink: 0;
 }
 
