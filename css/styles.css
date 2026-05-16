@@ -522,12 +522,24 @@ footer {
 /* Page title banner */
 .page-intro {
   margin-bottom: 3rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border);
 }
 
 .page-intro h1 {
   font-size: 2.5rem;
   color: var(--dark);
-  margin: 0.4rem 0 0.6rem;
+  margin: 0.4rem 0 0;
+}
+
+.page-intro h1::after {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 2px;
+  background: var(--gold);
+  margin-top: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 .page-intro > p {
