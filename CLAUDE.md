@@ -23,7 +23,7 @@ Double Happiness is being transformed from a personal travel photo blog into a *
 
 | Pillar | File | Voice | Purpose |
 |---|---|---|---|
-| **Journal** | `journal.html` | Personal, narrative, Bourdain-style | Existing travel stories, cultural depth, photography |
+| **Journal** | `journal.html` | Personal, narrative, immersive | Existing travel stories, cultural depth, photography |
 | **Guides** | `guides.html` | Practical, user-friendly, business-clear | SEO-targeted, monetizable, trip-planning content |
 
 ### Two AI-Powered Tools
@@ -101,8 +101,46 @@ Both loaded from Google Fonts. Do not add new font families.
 </a>
 ```
 
-### Colors
-Exact values are in `css/styles.css`. When in doubt, inspect that file first. Do not hardcode colors inline — use the existing CSS classes.
+### Color Palette
+
+This is the definitive color system for the site. Apply via CSS custom properties in `:root` at the top of `css/styles.css`. Do not hardcode hex values anywhere else — always reference the variable.
+
+```css
+:root {
+  --color-dark-void:   #141616;  /* Primary background, darkest surfaces */
+  --color-iridium:     #3D3C38;  /* Card backgrounds, secondary surfaces */
+  --color-artillery:   #746D67;  /* Borders, muted text, dividers */
+  --color-equilibrium: #A49F9D;  /* Subheadings, captions, placeholder text */
+  --color-falu-red:    #7F1D1A;  /* PRIMARY ACCENT — 囍 logo mark, links, buttons, hover states */
+  --color-white:       #F5F3F0;  /* Body text on dark backgrounds (warm white, not pure) */
+}
+```
+
+#### How to Use Each Color
+
+| Variable | Hex | Use |
+|---|---|---|
+| `--color-dark-void` | `#141616` | Page background, nav background, hero |
+| `--color-iridium` | `#3D3C38` | Post card backgrounds, tool panels, footer |
+| `--color-artillery` | `#746D67` | Borders, `<hr>` dividers, secondary nav text |
+| `--color-equilibrium` | `#A49F9D` | Post meta dates, captions, section labels |
+| `--color-falu-red` | `#7F1D1A` | **囍 logo-char, active nav links, buttons, `.read-more`, hover states, accent bars** |
+| `--color-white` | `#F5F3F0` | Body copy, headings on dark backgrounds |
+
+#### Critical: The 囍 Mark
+The logo character must always render in Falu Red. This is both a brand and a cultural decision — red is the correct color for 囍 in Chinese tradition.
+
+```css
+.logo-char {
+  color: var(--color-falu-red);
+}
+```
+
+#### Color Rules
+- Never use pure black (`#000000`) or pure white (`#ffffff`) — use Dark Void and the warm white instead
+- Falu Red is an accent only — do not use it for large background areas or body text
+- Maintain sufficient contrast: warm white text on Dark Void or Iridium backgrounds always passes WCAG AA
+- Do not add new colors without updating this file first
 
 ### Component Patterns
 - **Post cards:** `<article class="post-card">` with `.post-card-img` and `.post-card-body`
@@ -166,7 +204,16 @@ Work through these steps in order. Do not skip ahead.
 ### ✅ Step 0 — Audit Complete
 Repo structure and existing files have been reviewed. Stack confirmed as raw HTML/CSS/JS.
 
-### 🔲 Step 1 — Update Navigation (DO THIS FIRST)
+### 🔲 Step 1 — Update Navigation + Apply Color System (DO THIS FIRST)
+
+**1a. Apply the color system to `css/styles.css`:**
+- Add the `:root` CSS custom properties block at the very top of the file (see Design System → Color Palette above)
+- Replace all existing hardcoded hex color values throughout the file with the appropriate variable
+- Ensure `.logo-char { color: var(--color-falu-red); }` is set
+- Ensure accent elements (`.read-more`, `.btn-outline`, `.section-label`, active nav states) all use `var(--color-falu-red)`
+- Make no other visual changes — variable substitution only, the site should look identical after this step
+
+**1b. Rename and update navigation:**
 1. Rename `blog.html` → `journal.html`
 2. Update nav in `index.html` (both hero nav and sticky nav), `journal.html`, and `about.html`
 3. Update footer nav in all files
@@ -180,13 +227,13 @@ Repo structure and existing files have been reviewed. Stack confirmed as raw HTM
 5. Update all internal `href="blog.html"` links (including post cards on homepage) to `journal.html`
 
 ### 🔲 Step 2 — Build `michelin.html` (Budget Michelin Finder)
-Full spec below. This is the highest-impact quick win — build it early.
+Full spec in Feature Specs below. Highest-impact quick win — build it early.
 
 ### 🔲 Step 3 — Build `guides.html` (Practical Guides Landing Page)
-Listing page for practical travel content. Same layout as `journal.html` but with "Guides" branding. Starts empty with a "coming soon" message or placeholder cards.
+Listing page for practical travel content. Same layout as `journal.html` but with "Guides" branding. Starts with placeholder cards or a coming soon message.
 
 ### 🔲 Step 4 — Build `plan.html` (Itinerary Engine)
-Full spec below. More complex than Michelin — build after michelin.html is working.
+Full spec in Feature Specs below. More complex — build after michelin.html is working.
 
 ### 🔲 Step 5 — Update Homepage (`index.html`)
 - Add a "Tools" section between the intro and blog posts sections
@@ -198,10 +245,10 @@ Full spec below. More complex than Michelin — build after michelin.html is wor
 Add GSC verification meta tag and Google Analytics 4 script to all pages.
 
 ### 🔲 Step 7 — Affiliate Infrastructure
-Before publishing new guide content, add affiliate links to a reusable include pattern (or just consistent HTML snippets) for: Booking.com, GetYourGuide, SafetyWing, Airalo.
+Add the `/go/` redirect slugs to `_redirects` file (see Monetization Notes). Programs: Booking.com, GetYourGuide, SafetyWing, Airalo, Viator, TheFork. Add FTC disclosure to footer of all pages.
 
 ### 🔲 Step 8 — Email Capture
-Add a ConvertKit or Beehiiv embed to the Plan My Trip output flow. The itinerary engine gates its output behind an email capture.
+Add a ConvertKit or Beehiiv embed to the Plan My Trip output flow. The itinerary engine gates full output behind an email capture.
 
 ---
 
@@ -209,16 +256,16 @@ Add a ConvertKit or Beehiiv embed to the Plan My Trip output flow. The itinerary
 
 ### Budget Michelin Finder (`michelin.html`)
 
-**Concept:** User types a city → page calls Claude API → returns a list of Michelin-recognized restaurants at budget price points, with dining category, approximate cost, and any practical tips.
+**Concept:** User types a city → page calls Claude API → returns a list of Michelin-recognized restaurants at budget price points, with dining category, approximate cost, and practical tips.
 
-**Origin story (use in the page copy):** Joseph had two Michelin-star meals in Osaka for $10–15 each. This tool exists to help travelers find those experiences anywhere.
+**Origin story (use in the page copy):** Joseph had two Michelin-star meals in Osaka for $10–15 each. This tool exists to help any traveler find those experiences anywhere in the world.
 
 **UI elements:**
 - City input field (text)
-- Optional: budget tier selector (Under $20 / Under $50 / Any budget)
-- Optional: meal type (Lunch / Dinner / Either)
+- Budget tier selector (Under $20 / Under $50 / Any budget)
+- Meal type selector (Lunch / Dinner / Either)
 - Submit button → loading state → results list
-- Each result card: restaurant name, Michelin distinction (star / Bib Gourmand / Selected), cuisine type, estimated price range, brief description, practical tip
+- Each result card: restaurant name, Michelin distinction (Star / Bib Gourmand / Selected), cuisine type, estimated price range, brief description, practical tip
 
 **Claude API call pattern:**
 ```javascript
@@ -240,52 +287,172 @@ No preamble, no markdown, just raw JSON array.`
 });
 ```
 
-**Important:** The API key is injected by Netlify environment variable or the claude.ai artifact system. Never hardcode the key. In production on Netlify, use a Netlify Function as a proxy to keep the key server-side.
+**Important:** Never hardcode the API key. In production on Netlify, use a Netlify Function as a proxy to keep the key server-side. During development, the claude.ai artifact system handles auth automatically.
 
 **Monetization hooks:**
-- After results: "Book your table with ease" → affiliate link to TheFork or OpenTable
-- "Get travel insurance before you go" → SafetyWing affiliate link
-- "Need an eSIM for this trip?" → Airalo affiliate link
+- After results: "Book your table" → `/go/thefork`
+- "Get travel insurance before you go" → `/go/safetywing`
+- "Need an eSIM for this trip?" → `/go/airalo`
+
+---
 
 ### Itinerary Engine (`plan.html`)
 
-**Concept:** User fills out trip parameters → Claude API generates a fully styled, persona-driven custom itinerary.
+**Concept:** User fills out trip parameters → Claude API generates a fully styled, persona-driven custom itinerary written in the voice of the chosen travel persona.
 
-**Parameters:**
-| Field | Options |
-|---|---|
-| Destination | Free text |
-| Party Type | Solo / Couple / Family / Group |
-| Budget Tier | Shoestring / Value / Mid-Range / Luxury |
-| Style Persona | Bourdain / Zimmern / Phil Rosenthal / Rick Steves / Condé Nast |
-| Travel Pace | Packed / Balanced / Slow |
-| Interests | Food / History / Adventure / Nightlife / Nature / Art (multi-select) |
-| Duration | Weekend / 1 Week / 2 Weeks+ |
+#### Parameters
 
-**Persona descriptions for the system prompt:**
-- **Bourdain:** Raw, local, off the tourist trail. Street food over white tablecloths. Real neighborhoods, real people, honest writing.
-- **Zimmern:** Adventurous, fearless. Seeks unusual ingredients and forgotten culinary traditions. Respects local food culture deeply.
-- **Phil Rosenthal:** Joyful, accessible, enthusiastic. Finds delight in everything. Family-friendly wonder without being bland.
-- **Rick Steves:** Historical context, careful planning, cultural respect. Budget-conscious, educational, European-focused but adaptable.
-- **Condé Nast:** Aspirational, polished. Best hotels, best tables, beautiful experiences. Luxury without being crass.
+**Party Type:** Solo / Couple / Family / Group
 
-**Output format:** Day-by-day itinerary with morning/afternoon/evening structure, written in the voice of the chosen persona, with affiliate-linkable recommendations woven in naturally.
+**Budget Tier:** Shoestring / Value / Mid-Range / Luxury
 
-**Email gate:** Show a teaser of Day 1, then gate the full itinerary behind an email capture (ConvertKit embed).
+**Travel Pace:** Packed / Balanced / Slow
+
+**Duration:** Weekend / 1 Week / 2 Weeks+
+
+**Interests** *(multi-select checkboxes — user picks all that apply)*
+
+| # | Interest | Description for AI |
+|---|---|---|
+| 1 | Local Cuisine | Authentic regional food, market stalls, family-run restaurants, dishes you can't get at home |
+| 2 | Health Food | Plant-based, organic, wellness-focused dining, juice bars, farm-to-table |
+| 3 | Microbrews | Craft beer, local breweries, taprooms, regional beer culture |
+| 4 | Cocktails | Craft cocktail bars, speakeasies, rooftop bars, local spirits and liqueurs |
+| 5 | Historic | Ancient sites, ruins, UNESCO heritage, living history, museums, old quarters |
+| 6 | Art | Galleries, street art, design districts, cultural institutions, public installations |
+| 7 | Adventure | Trekking, climbing, extreme activities, adrenaline experiences |
+| 8 | Hiking | Trail walking, national park routes, scenic day hikes, mountain paths |
+| 9 | Water Sports | Diving, snorkeling, surfing, kayaking, sailing, island-hopping |
+| 10 | Wildlife | National parks, safaris, marine life, birdwatching, conservation experiences |
+| 11 | Photography | Golden hour locations, iconic viewpoints, architectural details, landscape composition |
+| 12 | Street Scene | Markets, alleys, everyday local life, the unscripted texture of a neighborhood |
+| 13 | Nightlife | Clubs, live music venues, night markets, evening culture and social scenes |
+| 14 | Nature | Landscapes, forests, mountains, rivers, slow outdoor immersion |
+| 15 | Shopping | Malls, designer retail, luxury goods, duty-free, brand-name destinations |
+| 16 | Local Markets | Artisan goods, handmade crafts, street markets, neighborhood shops, authentic souvenirs |
+| 17 | Relax | Spas, beaches, slow mornings, minimal itinerary, restorative and unhurried travel |
+| 18 | Active | Cycling, running routes, fitness culture, outdoor workouts, active sightseeing |
+| 19 | Social Scene | Communal dining, rooftop bars, hostel culture, local events and festivals where solo travelers naturally connect |
+| 20 | Local Shops | Independent neighborhood stores, bookshops, specialty food stores, non-tourist retail |
+
+#### Travel Personas
+
+Organized from raw/immersive to aspirational/polished. Anthony Bourdain is always listed first, Condé Nast always last.
+
+| # | Persona | Register |
+|---|---|---|
+| 1 | **Anthony Bourdain** | Raw, local, honest — street level, no filters |
+| 2 | **Andrew Zimmern** | Adventurous, fearless — seeks the unfamiliar with deep cultural respect |
+| 3 | **Paul Theroux** | Uncompromising, literary — slow overland travel, unsentimental observation |
+| 4 | **Rolf Potts** | Philosophical, unhurried — vagabonding as a lifelong practice |
+| 5 | **Pico Iyer** | Contemplative, interior — travel as self-examination and cultural meditation |
+| 6 | **Michael Yamashita** | Visual, humanist — finds the soul of a place through its people and light |
+| 7 | **Phil Rosenthal** | Joyful, warm, accessible — finds genuine delight in everything |
+| 8 | **Condé Nast** | Aspirational, polished — best hotels, best tables, beautifully considered |
+
+#### Persona System Prompt Descriptions
+
+Use these exact descriptions when constructing the Claude API system prompt for itinerary generation:
+
+- **Anthony Bourdain:** Raw, local, off the tourist trail. Street food over white tablecloths. Real neighborhoods, real people, no filters. Writes with honesty and a sharp eye for what makes a place authentic versus performed.
+- **Andrew Zimmern:** Adventurous and fearless. Seeks unusual ingredients, forgotten culinary traditions, and experiences most travelers walk past. Approaches every culture with genuine curiosity and deep respect.
+- **Paul Theroux:** Literary and uncompromising. Prefers trains, slow travel, and the places between destinations. Unsentimental, observational, deeply read. Suspicious of comfort but not ascetic.
+- **Rolf Potts:** Philosophical and unhurried. Believes travel is not an escape from life but a deepening of it. Itineraries are loose, time is generous, and the point is absorption not accumulation.
+- **Pico Iyer:** Contemplative and interior. Writes about displacement, the in-between, and what movement reveals about stillness. Finds meaning in airports, transit hotels, and the margins of places. The journey is always also inward.
+- **Michael Yamashita:** Visual and humanist. Every recommendation is seen before it is experienced — the quality of light, the human face, the moment before and after the obvious shot. Follows ancient routes and finds the thread connecting past to present.
+- **Phil Rosenthal:** Joyful, warm, and genuinely enthusiastic. Finds something wonderful in every meal, every encounter, every city. Accessible without being bland. Makes the reader feel invited rather than instructed.
+- **Condé Nast:** Aspirational and polished. The best room, the best table, the most considered experience. Luxury without ostentation. Writes as though everything is a privilege worth honoring.
+
+#### Output Format
+Day-by-day itinerary with morning / afternoon / evening structure, written in the voice of the chosen persona. Affiliate-linkable hotel and activity recommendations woven in naturally. Do not break persona voice to insert links — integrate them as the persona would naturally reference them.
+
+#### Email Gate
+Show a full preview of Day 1 only. Gate Days 2+ behind a ConvertKit email capture: *"Get your full itinerary delivered to your inbox."*
 
 ---
 
 ## Monetization Notes
 
-Every page that produces recommendations should include affiliate links. Priority programs to join:
-- Booking.com Partner Hub (hotels)
-- GetYourGuide Affiliate (activities)
-- Viator Affiliate (tours)
-- SafetyWing (travel insurance) — pays well, easy approval
-- Airalo (eSIM) — highly relevant for Asia travel content
-- TheFork / OpenTable (restaurant bookings — relevant for Michelin tool)
+### Affiliate Link Redirect Pattern
+Manage all affiliate links via Netlify `_redirects` file — never embed raw affiliate URLs in HTML. This allows updating a single line if a program changes your tracking code, and keeps URLs clean and trustworthy.
 
-Display ads (Mediavine or Raptive): apply once the site reaches 50,000 monthly sessions. Do not add Google AdSense in the meantime — it pays poorly and clutters the design.
+```
+/go/safetywing     https://safetywing.com/?referral=YOURCODE        302
+/go/airalo         https://www.airalo.com/?ref=YOURCODE              302
+/go/booking        https://www.booking.com/?aid=YOURCODE             302
+/go/getyourguide   https://www.getyourguide.com/?partner=YOURCODE   302
+/go/viator         https://www.viator.com/?pid=YOURCODE              302
+/go/thefork        https://www.thefork.com/?utm_source=YOURCODE      302
+```
+
+Replace `YOURCODE` with your actual affiliate tracking code after joining each program.
+
+Use in HTML as:
+```html
+<a href="/go/safetywing" target="_blank" rel="noopener sponsored">
+  Get travel insurance
+</a>
+```
+
+### Priority Affiliate Programs
+
+| Program | Category | Commission | Traffic Min | Notes |
+|---|---|---|---|---|
+| SafetyWing | Travel insurance | 10% recurring | None | Instant approval — set up first |
+| Airalo | eSIM | 9% | None | Perfect for Asia content |
+| Booking.com | Hotels | Varies | None | 3–5 day site review |
+| GetYourGuide | Activities | 8% | None | Embed activity widgets in posts |
+| Viator | Tours | 8% | None | Better SE Asia inventory than GYG |
+| TheFork | Restaurants | Per booking | None | Primary CTA on michelin.html |
+
+### Display Ads
+Apply to Mediavine or Raptive once the site reaches 50,000 monthly sessions. Do not add Google AdSense at any point — it pays poorly and degrades the design.
+
+### FTC Disclosure (Required by Law)
+Add to the footer of every page containing affiliate links:
+```html
+<p class="footer-disclosure">
+  Some links on this site are affiliate links. If you book or buy
+  through them, I may earn a small commission at no extra cost to you.
+</p>
+```
+
+---
+
+## Brand Story
+
+### Site Philosophy
+Double Happiness is built around transformational, immersive travel — not the collection of destinations but the accumulation of perspective. The site is for travelers who come back different.
+
+### About Page — Section 1: The Story Behind the Blog
+
+Use this copy verbatim:
+
+```
+That first transformational journey — the trip that took you far enough from everything
+familiar that you had to figure out who you were without any of the usual reference
+points — the one that quietly rearranges your interior architecture and rewrites your
+hard-coded paradigms is what Double Happiness is built around. Not as a one-time rite
+of passage, but as a practice. A way of moving through the world that keeps expanding
+what you thought you already understood.
+
+Every destination has an interior life that only reveals itself to those willing to look
+past the obvious. The meal that requires pointing at something unpronounceable. The
+conversation that survives the language barrier. The moment a place hands you back a
+slightly different version of yourself — a little less certain, a little more curious,
+a little better equipped for the next one.
+
+That feeling is available on every trip. This site is about learning to find it.
+```
+
+### About Page — Section 2: Understanding Double Happiness
+
+Write this section in first person, specific to Joseph's experience. Cover:
+- First encountering 囍 in Macau — finding it both funny and profound as an American
+- The cultural meaning: 囍 (Shuāngxǐ) is two distinct joys arriving simultaneously, not happiness doubled
+- The Song Dynasty origin story: a scholar on his way to the imperial exam falls ill, is nursed back to health by an herbalist's daughter, she gives him half a couplet as a challenge, he passes the exam and the Emperor completes the couplet — he writes 喜 twice to mark both joys arriving at once
+- Why the name stuck and became the brand
+- Do not genericize — this section is personal and specific to Joseph
 
 ---
 
@@ -321,9 +488,9 @@ Display ads (Mediavine or Raptive): apply once the site reaches 50,000 monthly s
 
 ## Netlify Configuration
 
-Current `netlify.toml` — add to this, don't replace:
+Current `netlify.toml` — add to this, do not replace existing content:
 ```toml
-# Add redirect when blog.html is renamed to journal.html
+# Redirect blog.html to journal.html (permanent)
 [[redirects]]
   from = "/blog.html"
   to = "/journal.html"
@@ -342,7 +509,10 @@ Current `netlify.toml` — add to this, don't replace:
 
 At the start of every Claude Code session working on this project:
 1. Read this CLAUDE.md fully
-2. Check which Step in the roadmap is next
+2. Check which Step in the roadmap is next (look for 🔲)
 3. Review the relevant existing file(s) before writing any new code
 4. Match the existing code style exactly before adding anything new
-5. Test at mobile width (375px) before considering anything done
+5. Make changes **one file at a time** — confirm before moving to the next
+6. Test at mobile width (375px) before considering anything done
+7. Never hardcode hex colors — always use CSS custom properties from the `:root` block
+8. Never hardcode affiliate URLs — always use `/go/` redirect slugs

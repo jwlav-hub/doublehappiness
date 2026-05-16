@@ -35,20 +35,14 @@
     <div></div>
   </header>
 
-  <!-- Page Title Banner -->
-  <div class="page-banner">
-    <span class="section-label">AI-Powered Itinerary Engine</span>
-    <h1>Plan My Trip</h1>
-    <p>Your destination. Your budget. Your voice. A real itinerary.</p>
-  </div>
-
   <main>
     <div class="tool-page">
 
-      <div class="tool-intro">
-        <p>
-          Fill in your trip details below and choose a travel persona — from Bourdain's raw street-food lens to Condé Nast's polished luxury. The AI writes your itinerary in that voice, day by day, morning through evening.
-        </p>
+      <div class="page-intro">
+        <span class="section-label">AI-Powered Itinerary Engine</span>
+        <h1>Plan My Trip</h1>
+        <p>Your destination. Your budget. Your voice. A real itinerary.</p>
+        <p>Fill in your trip details below and choose a travel persona — from Bourdain's raw street-food lens to Condé Nast's polished luxury. The AI writes your itinerary in that voice, day by day, morning through evening.</p>
       </div>
 
       <!-- Plan form -->
@@ -111,53 +105,88 @@
 
           <!-- Interests multi-select -->
           <div class="form-row">
-            <label class="form-label">Interests <span class="form-label-note">(select all that apply)</span></label>
+            <label class="form-label">Interests <span class="form-label-note">(select up to 8 · prioritized by order of selection)</span></label>
             <div class="interest-grid" id="interestGrid">
-              <button type="button" class="interest-btn active" data-interest="Food">Food</button>
-              <button type="button" class="interest-btn" data-interest="History">History</button>
+              <button type="button" class="interest-btn" data-interest="Local Cuisine">Local Cuisine</button>
+              <button type="button" class="interest-btn" data-interest="Health Food">Health Food</button>
+              <button type="button" class="interest-btn" data-interest="Microbrews">Microbrews</button>
+              <button type="button" class="interest-btn" data-interest="Cocktails">Cocktails</button>
+              <button type="button" class="interest-btn" data-interest="Historic">Historic</button>
+              <button type="button" class="interest-btn" data-interest="Art">Art</button>
               <button type="button" class="interest-btn" data-interest="Adventure">Adventure</button>
+              <button type="button" class="interest-btn" data-interest="Hiking">Hiking</button>
+              <button type="button" class="interest-btn" data-interest="Water Sports">Water Sports</button>
+              <button type="button" class="interest-btn" data-interest="Wildlife">Wildlife</button>
+              <button type="button" class="interest-btn" data-interest="Photography">Photography</button>
+              <button type="button" class="interest-btn" data-interest="Street Scene">Street Scene</button>
               <button type="button" class="interest-btn" data-interest="Nightlife">Nightlife</button>
               <button type="button" class="interest-btn" data-interest="Nature">Nature</button>
-              <button type="button" class="interest-btn" data-interest="Art">Art</button>
+              <button type="button" class="interest-btn" data-interest="Shopping">Shopping</button>
+              <button type="button" class="interest-btn" data-interest="Local Markets">Local Markets</button>
+              <button type="button" class="interest-btn" data-interest="Relax">Relax</button>
+              <button type="button" class="interest-btn" data-interest="Active">Active</button>
+              <button type="button" class="interest-btn" data-interest="Social Scene">Social Scene</button>
+              <button type="button" class="interest-btn" data-interest="Local Shops">Local Shops</button>
             </div>
           </div>
 
           <!-- Persona selector -->
           <div class="form-row">
-            <label class="form-label">Travel persona</label>
+            <label class="form-label">Travel Persona <span class="form-label-note">(select up to 3 · prioritized by order of selection)</span></label>
             <div class="persona-grid" id="personaGrid">
 
-              <label class="persona-card">
-                <input type="radio" name="persona" value="Bourdain" checked>
-                <span class="persona-name">Bourdain</span>
+              <div class="persona-card" data-persona="Anthony Bourdain">
+                <span class="persona-name">Anthony Bourdain</span>
                 <span class="persona-desc">Raw, local, off the tourist trail. Street food over white tablecloths.</span>
-              </label>
+              </div>
 
-              <label class="persona-card">
-                <input type="radio" name="persona" value="Zimmern">
-                <span class="persona-name">Zimmern</span>
-                <span class="persona-desc">Adventurous, fearless. Seeks unusual ingredients and forgotten culinary traditions.</span>
-              </label>
+              <div class="persona-card" data-persona="Andrew Zimmern">
+                <span class="persona-name">Andrew Zimmern</span>
+                <span class="persona-desc">Adventurous, fearless. Seeks the unfamiliar with deep cultural respect.</span>
+              </div>
 
-              <label class="persona-card">
-                <input type="radio" name="persona" value="Phil Rosenthal">
+              <div class="persona-card" data-persona="Paul Theroux">
+                <span class="persona-name">Paul Theroux</span>
+                <span class="persona-desc">Literary, uncompromising. Slow trains, the places between, unsentimental observation.</span>
+              </div>
+
+              <div class="persona-card" data-persona="Rolf Potts">
+                <span class="persona-name">Rolf Potts</span>
+                <span class="persona-desc">Philosophical, unhurried. Travel as a deepening of life, not an escape from it.</span>
+              </div>
+
+              <div class="persona-card" data-persona="Pico Iyer">
+                <span class="persona-name">Pico Iyer</span>
+                <span class="persona-desc">Contemplative, interior. The journey as self-examination and cultural meditation.</span>
+              </div>
+
+              <div class="persona-card" data-persona="Michael Yamashita">
+                <span class="persona-name">Michael Yamashita</span>
+                <span class="persona-desc">Visual, humanist. Finds the soul of a place through its people and light.</span>
+              </div>
+
+              <div class="persona-card" data-persona="Phil Rosenthal">
                 <span class="persona-name">Phil Rosenthal</span>
-                <span class="persona-desc">Joyful and accessible. Finds delight in everything. Family-friendly wonder.</span>
-              </label>
+                <span class="persona-desc">Joyful, warm, enthusiastic. Finds genuine delight in every meal and encounter.</span>
+              </div>
 
-              <label class="persona-card">
-                <input type="radio" name="persona" value="Rick Steves">
-                <span class="persona-name">Rick Steves</span>
-                <span class="persona-desc">Historical context, careful planning, cultural respect. Budget-conscious and educational.</span>
-              </label>
-
-              <label class="persona-card">
-                <input type="radio" name="persona" value="Condé Nast">
+              <div class="persona-card" data-persona="Condé Nast">
                 <span class="persona-name">Condé Nast</span>
-                <span class="persona-desc">Aspirational, polished. Best hotels, best tables, beautiful experiences.</span>
-              </label>
+                <span class="persona-desc">Aspirational, polished. Best hotels, best tables, most considered experience.</span>
+              </div>
 
             </div>
+          </div>
+
+          <!-- Bespoke Preferences -->
+          <div class="form-row">
+            <label class="form-label" for="bespokePrefs">Bespoke Preferences <span class="form-label-note">(optional · up to 250 words)</span></label>
+            <textarea
+              class="form-input"
+              id="bespokePrefs"
+              rows="4"
+              placeholder="Specific requests, must-see spots, dietary restrictions, mobility considerations, or anything else that should shape your itinerary…"
+            ></textarea>
           </div>
 
           <button type="submit" class="tool-submit" id="planSubmitBtn">
@@ -262,32 +291,77 @@
   </footer>
 
   <script>
-    // ── Interest toggle ──
+    // ── Order tracking state ──
+    let interestOrder = [];
+    let personaOrder  = [];
+    const MAX_INTERESTS = 8;
+    const MAX_PERSONAS  = 3;
+
+    // ── Badge helper ──
+    function addBadge(el, num) {
+      const badge = document.createElement('span');
+      badge.className = 'order-badge';
+      badge.textContent = num;
+      el.appendChild(badge);
+    }
+
+    // ── Interest toggle (ordered, max 8) ──
     document.getElementById('interestGrid').addEventListener('click', e => {
       const btn = e.target.closest('.interest-btn');
-      if (btn) btn.classList.toggle('active');
-    });
-
-    // ── Persona card highlight ──
-    document.getElementById('personaGrid').addEventListener('change', e => {
-      document.querySelectorAll('.persona-card').forEach(c => c.classList.remove('selected'));
-      if (e.target.type === 'radio') {
-        e.target.closest('.persona-card').classList.add('selected');
+      if (!btn) return;
+      const interest = btn.dataset.interest;
+      const idx = interestOrder.indexOf(interest);
+      if (idx > -1) {
+        interestOrder.splice(idx, 1);
+        btn.classList.remove('active');
+        btn.querySelector('.order-badge')?.remove();
+        // Re-number remaining
+        document.querySelectorAll('.interest-btn.active').forEach(b => {
+          b.querySelector('.order-badge')?.remove();
+          const i = interestOrder.indexOf(b.dataset.interest);
+          if (i > -1) addBadge(b, i + 1);
+        });
+      } else {
+        if (interestOrder.length >= MAX_INTERESTS) return;
+        interestOrder.push(interest);
+        btn.classList.add('active');
+        addBadge(btn, interestOrder.length);
       }
     });
-    // Set initial selected state
-    document.querySelector('.persona-card input:checked')
-      ?.closest('.persona-card')?.classList.add('selected');
+
+    // ── Persona toggle (ordered, max 3) ──
+    document.getElementById('personaGrid').addEventListener('click', e => {
+      const card = e.target.closest('.persona-card');
+      if (!card) return;
+      const persona = card.dataset.persona;
+      const idx = personaOrder.indexOf(persona);
+      if (idx > -1) {
+        personaOrder.splice(idx, 1);
+        card.classList.remove('selected');
+        card.querySelector('.order-badge')?.remove();
+        // Re-number remaining
+        document.querySelectorAll('.persona-card.selected').forEach(c => {
+          c.querySelector('.order-badge')?.remove();
+          const i = personaOrder.indexOf(c.dataset.persona);
+          if (i > -1) addBadge(c, i + 1);
+        });
+      } else {
+        if (personaOrder.length >= MAX_PERSONAS) return;
+        personaOrder.push(persona);
+        card.classList.add('selected');
+        addBadge(card, personaOrder.length);
+      }
+    });
 
     // ── State refs ──
-    const planLoading   = document.getElementById('planLoading');
-    const planError     = document.getElementById('planError');
-    const planErrorMsg  = document.getElementById('planErrorMsg');
-    const itinOutput    = document.getElementById('itineraryOutput');
-    const emailGate     = document.getElementById('emailGate');
-    const itinFull      = document.getElementById('itinFull');
+    const planLoading    = document.getElementById('planLoading');
+    const planError      = document.getElementById('planError');
+    const planErrorMsg   = document.getElementById('planErrorMsg');
+    const itinOutput     = document.getElementById('itineraryOutput');
+    const emailGate      = document.getElementById('emailGate');
+    const itinFull       = document.getElementById('itinFull');
     const itinAffiliates = document.getElementById('itinAffiliates');
-    const planSubmitBtn = document.getElementById('planSubmitBtn');
+    const planSubmitBtn  = document.getElementById('planSubmitBtn');
 
     let _fullItinerary = '';
 
@@ -298,34 +372,59 @@
     }
 
     const PERSONA_DESCRIPTIONS = {
-      'Bourdain':       'Raw, local, off the tourist trail. Street food over white tablecloths. Real neighborhoods, real people, honest writing.',
-      'Zimmern':        'Adventurous, fearless. Seeks unusual ingredients and forgotten culinary traditions. Respects local food culture deeply.',
-      'Phil Rosenthal': 'Joyful, accessible, enthusiastic. Finds delight in everything. Family-friendly wonder without being bland.',
-      'Rick Steves':    'Historical context, careful planning, cultural respect. Budget-conscious, educational, deeply informed.',
-      'Condé Nast':     'Aspirational, polished. Best hotels, best tables, beautiful experiences. Luxury without being crass.',
+      'Anthony Bourdain':  'Raw, local, off the tourist trail. Street food over white tablecloths. Real neighborhoods, real people, no filters. Writes with honesty and a sharp eye for what makes a place authentic versus performed.',
+      'Andrew Zimmern':    'Adventurous and fearless. Seeks unusual ingredients, forgotten culinary traditions, and experiences most travelers walk past. Approaches every culture with genuine curiosity and deep respect.',
+      'Paul Theroux':      'Literary and uncompromising. Prefers trains, slow travel, and the places between destinations. Unsentimental, observational, deeply read. Suspicious of comfort but not ascetic.',
+      'Rolf Potts':        'Philosophical and unhurried. Believes travel is not an escape from life but a deepening of it. Itineraries are loose, time is generous, and the point is absorption not accumulation.',
+      'Pico Iyer':         'Contemplative and interior. Writes about displacement, the in-between, and what movement reveals about stillness. Finds meaning in airports, transit hotels, and the margins of places. The journey is always also inward.',
+      'Michael Yamashita': 'Visual and humanist. Every recommendation is seen before it is experienced — the quality of light, the human face, the moment before and after the obvious shot. Follows ancient routes and finds the thread connecting past to present.',
+      'Phil Rosenthal':    'Joyful, warm, and genuinely enthusiastic. Finds something wonderful in every meal, every encounter, every city. Accessible without being bland. Makes the reader feel invited rather than instructed.',
+      'Condé Nast':        'Aspirational and polished. The best room, the best table, the most considered experience. Luxury without ostentation. Writes as though everything is a privilege worth honoring.',
     };
 
     async function generateItinerary(e) {
       e.preventDefault();
+
+      if (personaOrder.length === 0) {
+        planErrorMsg.textContent = 'Please select at least one Travel Persona before generating your itinerary.';
+        planError.classList.add('visible');
+        return;
+      }
 
       const destination = document.getElementById('destination').value.trim();
       const duration    = document.getElementById('duration').value;
       const partyType   = document.getElementById('partyType').value;
       const budgetTier  = document.getElementById('budgetTier').value;
       const pace        = document.getElementById('pace').value;
-      const persona     = document.querySelector('input[name="persona"]:checked').value;
-      const interests   = [...document.querySelectorAll('.interest-btn.active')]
-                            .map(b => b.dataset.interest).join(', ') || 'General';
+      const bespoke     = document.getElementById('bespokePrefs').value.trim();
 
       if (!destination) return;
+
+      // Build interests string (ordered by selection priority)
+      const interestsList = interestOrder.length > 0
+        ? interestOrder.map((int, i) => `${i + 1}. ${int}`).join(', ')
+        : 'General exploration';
+
+      // Build persona context
+      const primaryPersona   = personaOrder[0];
+      const secondaryPersonas = personaOrder.slice(1);
+      const primaryDesc      = PERSONA_DESCRIPTIONS[primaryPersona] || '';
+
+      let personaSection = `Primary voice: ${primaryPersona} — ${primaryDesc}`;
+      if (secondaryPersonas.length > 0) {
+        const secondaryLines = secondaryPersonas
+          .map(p => `${p} (${PERSONA_DESCRIPTIONS[p] || ''})`)
+          .join('; ');
+        personaSection += `\nSecondary influences to weave in subtly: ${secondaryLines}`;
+      }
 
       hidePlanAll();
       planLoading.classList.add('visible');
       planSubmitBtn.disabled = true;
 
-      const personaDesc = PERSONA_DESCRIPTIONS[persona] || '';
-      const prompt = `You are writing a travel itinerary in the voice and style of ${persona}.
-Persona style: ${personaDesc}
+      const prompt = `You are writing a travel itinerary primarily in the voice and style of ${primaryPersona}.
+
+${personaSection}
 
 Write a day-by-day itinerary for:
 - Destination: ${destination}
@@ -333,18 +432,15 @@ Write a day-by-day itinerary for:
 - Party type: ${partyType}
 - Budget tier: ${budgetTier}
 - Travel pace: ${pace}
-- Interests: ${interests}
+- Interests (in priority order): ${interestsList}${bespoke ? `\n- Bespoke preferences: ${bespoke}` : ''}
 
-Format:
+Format each day exactly as:
 ## Day 1 — [Theme Title]
 **Morning:** ...
 **Afternoon:** ...
 **Evening:** ...
 
-## Day 2 — [Theme Title]
-...and so on for all days.
-
-Write in the voice of ${persona}. Be specific with real restaurant names, neighborhoods, and practical tips. Weave in the persona's personality throughout.`;
+Continue for all days. Be specific with real restaurant names, neighborhoods, and practical tips. Maintain the primary persona's voice throughout, with subtle traces of the secondary influences where they fit naturally.`;
 
       try {
         const res = await fetch('/api/claude', {
@@ -365,7 +461,7 @@ Write in the voice of ${persona}. Be specific with real restaurant names, neighb
         _fullItinerary = text;
 
         hidePlanAll();
-        renderItinerary(destination, duration, persona, text);
+        renderItinerary(destination, duration, primaryPersona, secondaryPersonas, text);
       } catch (err) {
         hidePlanAll();
         planErrorMsg.textContent = `Something went wrong: ${err.message}. Please try again.`;
@@ -375,19 +471,22 @@ Write in the voice of ${persona}. Be specific with real restaurant names, neighb
       }
     }
 
-    function renderItinerary(destination, duration, persona, text) {
-      // Split on day markers
+    function renderItinerary(destination, duration, primary, secondary, text) {
       const days = text.split(/(?=##\s*Day\s*\d)/i).filter(s => s.trim());
 
-      document.getElementById('itinLabel').textContent    = destination;
-      document.getElementById('itinHeading').textContent  = `Your ${duration} Itinerary`;
-      document.getElementById('itinPersona').textContent  = `Written in the style of ${persona}`;
+      const personaTag = secondary.length > 0
+        ? `Written in the style of ${primary} · with ${secondary.join(' & ')}`
+        : `Written in the style of ${primary}`;
+
+      document.getElementById('itinLabel').textContent   = destination;
+      document.getElementById('itinHeading').textContent = `Your ${duration} Itinerary`;
+      document.getElementById('itinPersona').textContent = personaTag;
 
       // Show Day 1 as teaser
       const day1Html = markdownToHtml(days[0] || '');
       document.getElementById('itinDay1').innerHTML = `<div class="day-block day-block--teaser">${day1Html}</div>`;
 
-      // Store remaining days
+      // Remaining days (behind email gate)
       const remainingHtml = days.slice(1).map(d =>
         `<div class="day-block">${markdownToHtml(d)}</div>`
       ).join('');
