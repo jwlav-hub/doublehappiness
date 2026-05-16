@@ -521,9 +521,7 @@ footer {
 
 /* Page title banner */
 .page-intro {
-  margin-bottom: 3rem;
-  padding-bottom: 2.5rem;
-  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.5rem;
 }
 
 .page-intro h1 {
@@ -532,22 +530,62 @@ footer {
   margin: 0.4rem 0 0;
 }
 
-.page-intro h1::after {
+.page-intro h1::after,
+.page-intro h2::after {
   content: '';
   display: block;
   width: 48px;
   height: 2px;
   background: var(--gold);
-  margin-top: 1rem;
-  margin-bottom: 1.25rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.9rem;
+}
+
+.page-intro h2 {
+  font-size: 2.5rem;
+  color: var(--dark);
+  margin: 0.4rem 0 0;
+}
+
+.tool-section-break {
+  border-top: 1px solid var(--border);
+  margin: 5rem 0 4rem;
+}
+
+.tool-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+  margin-bottom: 2rem;
+}
+
+.tool-column .page-intro h1,
+.tool-column .page-intro h2 {
+  font-size: 1.9rem;
+}
+
+.tool-column .tool-form-wrap {
+  margin-bottom: 0;
+}
+
+@media (max-width: 900px) {
+  .tool-columns { grid-template-columns: 1fr; }
+}
+
+.page-intro-tagline {
+  font-size: 1rem;
+  color: var(--text-light);
+  font-style: italic;
+  margin-bottom: 0;
+  line-height: 1.6;
 }
 
 .page-intro > p {
   color: var(--text-light);
   font-size: 0.95rem;
-  line-height: 1.75;
-  max-width: 660px;
-  margin-bottom: 0.6rem;
+  line-height: 1.7;
+  margin-bottom: 0.5rem;
 }
 
 
@@ -939,9 +977,9 @@ img.contributor-photo {
 
 .tools-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
-  max-width: 900px;
+  max-width: 1200px;
   margin: 3rem auto 0;
 }
 
@@ -1465,7 +1503,7 @@ img.contributor-photo {
 }
 
 @media (max-width: 768px) {
-  .tools-grid          { grid-template-columns: 1fr; }
+  .tools-grid          { grid-template-columns: 1fr 1fr; }
   .results-grid        { grid-template-columns: 1fr; }
   .tool-affiliates     { grid-template-columns: 1fr; }
   .form-row-group      { grid-template-columns: 1fr; }
@@ -1477,4 +1515,5 @@ img.contributor-photo {
 
 @media (max-width: 600px) {
   .persona-grid { grid-template-columns: repeat(2, 1fr); }
+  .tools-grid   { grid-template-columns: 1fr; }
 }
